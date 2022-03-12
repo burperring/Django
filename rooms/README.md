@@ -1,0 +1,3 @@
+# Django Project
+
+Using Python, Django, Tailwind and more...
