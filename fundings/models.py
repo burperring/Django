@@ -4,6 +4,48 @@ from core import models as core_models
 from users import models as user_models
 
 
+class AbstractItem(core_models.TimeStampedModel):
+
+    """Abstract Item"""
+
+    name = models.CharField(max_length=80)
+
+    class Meta:
+        abstract = True
+
+    def __str__(self):
+        return self.name
+
+
+class MusicType(AbstractItem):
+
+    """MusicType Model Definition"""
+
+    pass
+
+
+class Amenity(AbstractItem):
+
+    """Amenity Model Definition"""
+
+    class Meta:
+        pass
+
+
+class Facility(AbstractItem):
+
+    """Facility Model Definition"""
+
+    pass
+
+
+class HouseRule(AbstractItem):
+
+    """HouseRule Model Definition"""
+
+    pass
+
+
 class Funding(core_models.TimeStampedModel):
 
     """Funding Model Definition"""
@@ -22,3 +64,10 @@ class Funding(core_models.TimeStampedModel):
     check_out = models.TimeField()
     instant_book = models.BooleanField(default=False)
     host = models.ForeignKey(user_models.User, on_delete=models.CASCADE)
+    music_type = models.ForeignKey(MusicType, on_delete=models.SET_NULL, null=True)
+    amenities = models.ManyToManyField(Amenity)
+    facilities = models.ManyToManyField(Facility)
+    house_rules = models.ManyToManyField(HouseRule)
+
+    def __str__(self):
+        return self.name
