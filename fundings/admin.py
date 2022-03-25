@@ -37,7 +37,7 @@ class FundingAdmin(admin.ModelAdmin):
         ),
         (
             "Last Details",
-            {"fields": ("host")},
+            {"fields": ("host",)},
         ),
     )
 
@@ -53,6 +53,7 @@ class FundingAdmin(admin.ModelAdmin):
         "check_in",
         "check_out",
         "instant_book",
+        "count_amenities",
     )
 
     list_filter = (
@@ -64,7 +65,6 @@ class FundingAdmin(admin.ModelAdmin):
         "house_rules",
         "city",
         "country",
-        "count_amenities",
     )
 
     search_fields = (
@@ -79,12 +79,12 @@ class FundingAdmin(admin.ModelAdmin):
     )
 
     def count_amenities(self, obj):
-        return ""
+        return obj.amenities.count()
 
 
 @admin.register(models.Photo)
 class PhotoAdmin(admin.ModelAdmin):
 
-    """"""
+    """ """
 
     pass

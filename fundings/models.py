@@ -54,7 +54,9 @@ class Photo(core_models.TimeStampedModel):
 
     caption = models.CharField(max_length=80)
     file = models.ImageField()
-    funding = models.ForeignKey("Funding", on_delete=models.CASCADE)
+    funding = models.ForeignKey(
+        "Funding", related_name="photos", on_delete=models.CASCADE
+    )
 
     def __str__(self):
         return self.caption
@@ -77,11 +79,17 @@ class Funding(core_models.TimeStampedModel):
     check_in = models.TimeField()
     check_out = models.TimeField()
     instant_book = models.BooleanField(default=False)
-    host = models.ForeignKey("users.User", on_delete=models.CASCADE)
-    music_type = models.ForeignKey("MusicType", on_delete=models.SET_NULL, null=True)
-    amenities = models.ManyToManyField("Amenity", blank=True)
-    facilities = models.ManyToManyField("Facility", blank=True)
-    house_rules = models.ManyToManyField("HouseRule", blank=True)
+    host = models.ForeignKey(
+        "users.User", related_name="fundings", on_delete=models.CASCADE
+    )
+    music_type = models.ForeignKey(
+        "MusicType", related_name="music_types", on_delete=models.SET_NULL, null=True
+    )
+    amenities = models.ManyToManyField("Amenity", related_name="fundings", blank=True)
+    facilities = models.ManyToManyField("Facility", related_name="fundings", blank=True)
+    house_rules = models.ManyToManyField(
+        "HouseRule", related_name="fundings", blank=True
+    )
 
     def __str__(self):
         return self.name

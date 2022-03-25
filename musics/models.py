@@ -29,7 +29,7 @@ class Photo(core_models.TimeStampedModel):
 
     caption = models.CharField(max_length=80)
     file = models.ImageField()
-    music = models.ForeignKey("Music", on_delete=models.CASCADE)
+    music = models.ForeignKey("Music", related_name="photo", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.caption
@@ -42,7 +42,9 @@ class Music(core_models.TimeStampedModel):
     name = models.CharField(max_length=140)
     description = models.TextField()
     price = models.IntegerField()
-    music_type = models.ForeignKey("MusicType", on_delete=models.SET_NULL, null=True)
+    music_type = models.ForeignKey(
+        "MusicType", related_name="music_types", on_delete=models.SET_NULL, null=True
+    )
 
     def __str__(self):
         return self.name

@@ -9,7 +9,9 @@ class Review(core_models.TimeStampedModel):
     review = models.TextField()
     critic_score = models.IntegerField()
     user_score = models.IntegerField()
-    user = models.ForeignKey("users.User", on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        "users.User", related_name="reviews", on_delete=models.CASCADE
+    )
 
     def __str__(self):
         return f"{self.review} - {self.music}"

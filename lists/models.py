@@ -7,8 +7,12 @@ class List(core_models.TimeStampedModel):
     """List Model Definition"""
 
     name = models.CharField(max_length=80)
-    user = models.ForeignKey("users.User", on_delete=models.CASCADE)
-    fundings = models.ManyToManyField("fundings.Funding", blank=True)
+    user = models.ForeignKey(
+        "users.User", related_name="lists", on_delete=models.CASCADE
+    )
+    fundings = models.ManyToManyField(
+        "fundings.Funding", related_name="lists", blank=True
+    )
 
     def __str__(self):
         return self.name

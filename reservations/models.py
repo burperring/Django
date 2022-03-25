@@ -21,8 +21,12 @@ class Reservation(core_models.TimeStampedModel):
     )
     funding_start = models.DateField()
     funding_end = models.DateField()
-    guest = models.ForeignKey("users.User", on_delete=models.CASCADE)
-    funding = models.ForeignKey("fundings.Funding", on_delete=models.CASCADE)
+    guest = models.ForeignKey(
+        "users.User", related_name="reservations", on_delete=models.CASCADE
+    )
+    funding = models.ForeignKey(
+        "fundings.Funding", related_name="reservations", on_delete=models.CASCADE
+    )
 
     def __str__(self):
         return f"{self.funding} - {self.funding_start}"
