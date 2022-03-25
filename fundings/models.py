@@ -83,7 +83,7 @@ class Funding(core_models.TimeStampedModel):
         "users.User", related_name="fundings", on_delete=models.CASCADE
     )
     music_type = models.ForeignKey(
-        "MusicType", related_name="music_types", on_delete=models.SET_NULL, null=True
+        "MusicType", related_name="fundings", on_delete=models.SET_NULL, null=True
     )
     amenities = models.ManyToManyField("Amenity", related_name="fundings", blank=True)
     facilities = models.ManyToManyField("Facility", related_name="fundings", blank=True)
