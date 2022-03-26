@@ -15,3 +15,9 @@ class Review(core_models.TimeStampedModel):
 
     def __str__(self):
         return f"{self.review} - {self.music}"
+
+    def rating_average(self):
+        avg = (self.critic_score + self.user_score) / 2
+        return round(avg, 2)
+
+    rating_average.short_description = "Avg"
