@@ -16,3 +16,8 @@ class List(core_models.TimeStampedModel):
 
     def __str__(self):
         return self.name
+
+    def count_music(self):
+        return self.fundings.count()
+
+    count_music.short_description = "Number of Musics"
