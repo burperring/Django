@@ -12,9 +12,12 @@ class Review(core_models.TimeStampedModel):
     user = models.ForeignKey(
         "users.User", related_name="reviews", on_delete=models.CASCADE
     )
+    funding = models.ForeignKey(
+        "fundings.Funding", related_name="reviews", on_delete=models.CASCADE
+    )
 
     def __str__(self):
-        return f"{self.review} - {self.music}"
+        return f"{self.review} - {self.funding}"
 
     def rating_average(self):
         avg = (self.critic_score + self.user_score) / 2

@@ -19,8 +19,8 @@ class Reservation(core_models.TimeStampedModel):
     status = models.CharField(
         max_length=12, choices=STATUS_CHOICES, default=STATUS_PENDING
     )
-    funding_start = models.DateField()
-    funding_end = models.DateField()
+    check_in = models.DateField()
+    check_out = models.DateField()
     guest = models.ForeignKey(
         "users.User", related_name="reservations", on_delete=models.CASCADE
     )
@@ -29,4 +29,4 @@ class Reservation(core_models.TimeStampedModel):
     )
 
     def __str__(self):
-        return f"{self.funding} - {self.funding_start}"
+        return f"{self.funding} - {self.check_in}"

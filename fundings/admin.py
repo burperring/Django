@@ -23,7 +23,7 @@ class FundingAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             "Basic Info",
-            {"fields": ("name", "description", "country", "adress", "price")},
+            {"fields": ("name", "description", "country", "address", "price")},
         ),
         (
             "Times",
