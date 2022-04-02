@@ -53,7 +53,7 @@ class Photo(core_models.TimeStampedModel):
     """Photo Model Definition"""
 
     caption = models.CharField(max_length=80)
-    file = models.ImageField()
+    file = models.ImageField(upload_to="funding_photos")
     funding = models.ForeignKey(
         "Funding", related_name="photos", on_delete=models.CASCADE
     )
@@ -76,8 +76,8 @@ class Funding(core_models.TimeStampedModel):
     beds = models.IntegerField()
     bedrooms = models.IntegerField()
     baths = models.IntegerField()
-    check_in = models.TimeField()
-    check_out = models.TimeField()
+    check_in = models.DateField()
+    check_out = models.DateField()
     instant_book = models.BooleanField(default=False)
     host = models.ForeignKey(
         "users.User", related_name="fundings", on_delete=models.CASCADE
