@@ -93,3 +93,7 @@ class Funding(core_models.TimeStampedModel):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        self.city = str.capitalize(self.city)  # 대문자 생성
+        super().save(*args, **kwargs)
