@@ -39,7 +39,7 @@ class FundingAdmin(admin.ModelAdmin):
         ),
         (
             "Spaces",
-            {"fields": ("guests", "beds", "bedrooms", "baths")},
+            {"fields": ("music_type", "guests", "beds", "bedrooms", "baths")},
         ),
         (
             "More About the Space",
