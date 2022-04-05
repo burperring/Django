@@ -3,6 +3,9 @@ from fundings.models import Amenity
 
 
 class Command(BaseCommand):
+
+    help = "This command create amenities"
+
     def handle(self, *args, **options):
         amenities = [
             "Air conditioning",
