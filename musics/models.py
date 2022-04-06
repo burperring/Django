@@ -32,6 +32,9 @@ class Music(core_models.TimeStampedModel):
     """Music Model Definition"""
 
     name = models.CharField(max_length=140)
+    songwriter = models.ForeignKey(
+        "users.User", related_name="musics", on_delete=models.CASCADE
+    )
     description = models.TextField()
     price = models.IntegerField()
 
