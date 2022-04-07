@@ -20,8 +20,8 @@ class Reservation(core_models.TimeStampedModel):
     status = models.CharField(
         max_length=12, choices=STATUS_CHOICES, default=STATUS_PENDING
     )
-    check_in = models.DateField()
-    check_out = models.DateField()
+    funding_start = models.DateField()
+    funding_end = models.DateField()
     guest = models.ForeignKey(
         "users.User", related_name="reservations", on_delete=models.CASCADE
     )
@@ -30,16 +30,16 @@ class Reservation(core_models.TimeStampedModel):
     )
 
     def __str__(self):
-        return f"{self.funding} - {self.check_in}"
+        return f"{self.funding} - {self.funding_start}"
 
     def in_progress(self):
         now = timezone.now().date()
-        return now > self.check_in and now < self.check_out
+        return now >= self.funding_start and now <= self.funding_end
 
     in_progress.boolean = True
 
     def is_finished(self):
         now = timezone.now().date()
-        return now > self.check_out
+        return now > self.funding_end
 
     is_finished.boolean = True

@@ -10,8 +10,8 @@ class ReservationAdmin(admin.ModelAdmin):
     list_display = (
         "funding",
         "status",
-        "check_in",
-        "check_out",
+        "funding_start",
+        "funding_end",
         "guest",
         "in_progress",
         "is_finished",
