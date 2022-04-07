@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% for funding in fundings %}
+    <h1>{{funding.name}} / ${{funding.price}}</h1>
+{% endfor %}
+
