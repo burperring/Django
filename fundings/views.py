@@ -1,13 +1,15 @@
 from django.shortcuts import render
+from django.core.paginator import Paginator
 from . import models
 
 
 def all_fundings(request):
-    page = int(request.GET.get("page", 1))
-    page_size = 10
-    limit = page_size * page
-    offset = limit - page_size
-    all_fundings = models.Funding.objects.all()[offset:limit]
+    page = request.GET.get("page")
+    funding_list = models.Funding.objects.all()
+    paginator = Paginator(funding_list, 10)
+    fundings = paginator.get_page(page)
     return render(
-        request, "fundings/all_fundings.html", context={"fundings": all_fundings}
+        request,
+        "fundings/all_fundings.html",
+        {"fundings": fundings},
     )

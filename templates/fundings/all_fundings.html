@@ -6,9 +6,22 @@
 
 {%block content%}
 
-    {% for funding in fundings %}
+    {% for funding in fundings.object_list %}
         <h1>{{funding.name}} / ${{funding.price}}</h1>
     {% endfor %}
+
+    <h5>
+        {% if fundings.has_previous %}
+            <a href="?page={{fundings.number|add:-1}}"> Previous </a>
+        {% endif %}
+        
+        Page{{fundings.number}} of {{fundings.paginator.num_pages}}
+
+        {% if fundings.has_next %}
+            <a href="?page={{fundings.number|add:1}}"> Next </a>
+        {% endif %}
+        
+    </h5>
 
 {% endblock content%}
 
