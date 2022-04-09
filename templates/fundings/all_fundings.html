@@ -1,5 +1,14 @@
 {% extends "base.html" %}
-{% for funding in fundings %}
-    <h1>{{funding.name}} / ${{funding.price}}</h1>
-{% endfor %}
+
+{% block page_name %}
+    Home
+{% endblock page_name %}
+
+{%block content%}
+
+    {% for funding in fundings %}
+        <h1>{{funding.name}} / ${{funding.price}}</h1>
+    {% endfor %}
+
+{% endblock content%}
 
