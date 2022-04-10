@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django_countries.fields import CountryField
 from core import models as core_models
 
@@ -97,3 +98,6 @@ class Funding(core_models.TimeStampedModel):
     def save(self, *args, **kwargs):
         self.city = str.capitalize(self.city)  # 대문자 생성
         super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse("fundings:detail", kwargs={"pk": self.pk})

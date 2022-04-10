@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block page_name %}
+    Home
+{% endblock page_name %}
+
+{% block content %}
+<div>
+    <h1> {{funding.name}} </h1>
+    <h3> {{funding.description}} </h3>
+</div>
+<div>
+    <h2> 
+        By: {{funding.host.username}}
+        {% if funding.host.superhost %}
+            (superhost)
+        {% endif %}
+    </h2>
+    <h3> Amenities </h3>
+    <ul>
+        {% for a in funding.amenities.all %}
+            <li> {{a}} </li>
+        {% endfor %}
+    </ul>
+    <h3> Facilities </h3>
+    <ul>
+        {% for a in funding.facilities.all %}
+            <li> {{a}} </li>
+        {% endfor %}
+    </ul>
+    <h3> House Rules </h3>
+    <ul>
+        {% for a in funding.house_rules.all %}
+            <li> {{a}} </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock content %}

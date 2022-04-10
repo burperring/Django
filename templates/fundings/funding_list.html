@@ -4,10 +4,14 @@
     Home
 {% endblock page_name %}
 
-{%block content%}
+{% block content %}
 
     {% for funding in fundings %}
-        <h1>{{funding.name}} / ${{funding.price}}</h1>
+        <h3>
+            <a href="{% url "fundings:detail" funding.pk %}">
+                {{funding.name}} / ${{funding.price}}
+            </a>
+        </h3>
     {% endfor %}
 
     <h5>
@@ -23,5 +27,5 @@
         
     </h5>
 
-{% endblock content%}
+{% endblock content %}
 
