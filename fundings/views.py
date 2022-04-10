@@ -1,6 +1,4 @@
-from django.views.generic import ListView
-from django.urls import reverse
-from django.shortcuts import render, redirect
+from django.views.generic import ListView, DetailView
 from . import models
 
 
@@ -15,9 +13,8 @@ class HomeView(ListView):
     context_object_name = "fundings"
 
 
-def funding_detail(request, pk):
-    try:
-        funding = models.Funding.objects.get(pk=pk)
-        return render(request, "fundings/detail.html", {"funding": funding})
-    except models.Funding.DoesNotExist:
-        return redirect(reverse("core:home"))
+class FundingDetail(DetailView):
+
+    """FundingDetail Definition"""
+
+    model = models.Funding
