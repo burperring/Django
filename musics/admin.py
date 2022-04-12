@@ -3,6 +3,19 @@ from django.utils.html import mark_safe
 from . import models
 
 
+@admin.register(models.MusicType)
+class ItemAdmin(admin.ModelAdmin):
+
+    """Item Admin Definition"""
+
+    list_display = ("name", "used_by")
+
+    def used_by(self, obj):
+        return obj.fundings.count()
+
+    pass
+
+
 class PhotoInline(admin.TabularInline):
 
     model = models.Photo
@@ -17,7 +30,7 @@ class MusicAdmin(admin.ModelAdmin):
 
     list_display = (
         "name",
-        "songwriter",
+        "lyricist",
         "description",
         "price",
         "total_rating",
@@ -27,6 +40,8 @@ class MusicAdmin(admin.ModelAdmin):
         return obj.photos.count()
 
     count_photos.short_description = "Photo Count"
+
+    filter_horizontal = ("music_type",)
 
 
 @admin.register(models.Photo)

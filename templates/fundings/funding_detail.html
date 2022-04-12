@@ -11,28 +11,18 @@
 </div>
 <div>
     <h2> 
-        By: {{funding.host.username}}
-        {% if funding.host.superhost %}
+        By: {{funding.lyricist.username}}
+        {% if funding.lyricist.superhost %}
             (superhost)
         {% endif %}
     </h2>
-    <h3> Amenities </h3>
+    <h3> Music Type </h3>
     <ul>
-        {% for a in funding.amenities.all %}
+        {% for a in funding.music_type.all %}
             <li> {{a}} </li>
         {% endfor %}
     </ul>
-    <h3> Facilities </h3>
-    <ul>
-        {% for a in funding.facilities.all %}
-            <li> {{a}} </li>
-        {% endfor %}
-    </ul>
-    <h3> House Rules </h3>
-    <ul>
-        {% for a in funding.house_rules.all %}
-            <li> {{a}} </li>
-        {% endfor %}
-    </ul>
+    <h3> Funding Date </h3>
+    <ul> {{funding.funding_start}} ~ {{funding.funding_end}} </ul>
 </div>
 {% endblock content %}

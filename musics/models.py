@@ -15,6 +15,14 @@ class AbstractItem(core_models.TimeStampedModel):
         return self.name
 
 
+class MusicType(AbstractItem):
+
+    """MusicType Model Definition"""
+
+    class Meta:
+        verbose_name = "Music Type"
+
+
 class Photo(core_models.TimeStampedModel):
 
     """Photo Model Definition"""
@@ -32,11 +40,12 @@ class Music(core_models.TimeStampedModel):
     """Music Model Definition"""
 
     name = models.CharField(max_length=140)
-    songwriter = models.ForeignKey(
+    lyricist = models.ForeignKey(
         "users.User", related_name="musics", on_delete=models.CASCADE
     )
     description = models.TextField()
     price = models.IntegerField()
+    music_type = models.ManyToManyField("MusicType", related_name="musics", blank=True)
 
     def __str__(self):
         return self.name

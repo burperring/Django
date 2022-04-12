@@ -1,8 +1,6 @@
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
-
-# from django_countries.fields import CountryField
 from core import models as core_models
 
 
@@ -27,30 +25,6 @@ class MusicType(AbstractItem):
         verbose_name = "Music Type"
 
 
-# class Amenity(AbstractItem):
-#
-#    """Amenity Model Definition"""
-#
-#    class Meta:
-#        verbose_name_plural = "Amenities"
-
-
-# class Facility(AbstractItem):
-#
-#    """Facility Model Definition"""
-#
-#    class Meta:
-#        verbose_name_plural = "Facilities"
-
-
-# class HouseRule(AbstractItem):
-#
-#    """HouseRule Model Definition"""
-#
-#    class Meta:
-#        verbose_name = "House Rule"
-
-
 class Photo(core_models.TimeStampedModel):
 
     """Photo Model Definition"""
@@ -71,19 +45,9 @@ class Funding(core_models.TimeStampedModel):
 
     name = models.CharField(max_length=140)
     description = models.TextField()
-    # country = CountryField()
-    # city = models.CharField(max_length=80)
     price = models.IntegerField()
-    # address = models.CharField(max_length=140)
-    # guests = models.IntegerField()
-    # beds = models.IntegerField()
-    # bedrooms = models.IntegerField()
-    # baths = models.IntegerField()
-    # check_in = models.DateField()
-    # check_out = models.DateField()
     funding_start = models.DateField()
     funding_end = models.DateField()
-    # instant_book = models.BooleanField(default=False)
     music_stock = models.IntegerField()
     music_share = models.IntegerField()
     lyricist = models.ForeignKey(
@@ -92,18 +56,9 @@ class Funding(core_models.TimeStampedModel):
     music_type = models.ManyToManyField(
         "MusicType", related_name="fundings", blank=True
     )
-    # amenities = models.ManyToManyField("Amenity", related_name="fundings", blank=True)
-    # facilities = models.ManyToManyField("Facility", related_name="fundings", blank=True)
-    # house_rules = models.ManyToManyField(
-    #    "HouseRule", related_name="fundings", blank=True
-    # )
 
     def __str__(self):
         return self.name
-
-    # def save(self, *args, **kwargs):
-    #    self.city = str.capitalize(self.city)  # 대문자 생성
-    #    super().save(*args, **kwargs)
 
     def in_progress(self):
         now = timezone.now().date()
@@ -119,7 +74,7 @@ class Funding(core_models.TimeStampedModel):
 
     def share_price(self):
         share_price = self.price / self.music_stock
-        return share_price
+        return round(share_price, 2)
 
     def get_absolute_url(self):
         return reverse("fundings:detail", kwargs={"pk": self.pk})

@@ -3,9 +3,7 @@ from django.utils.html import mark_safe
 from . import models
 
 
-@admin.register(
-    models.MusicType,  # models.Facility, models.Amenity, models.HouseRule
-)
+@admin.register(models.MusicType)
 class ItemAdmin(admin.ModelAdmin):
 
     """Item Admin Definition"""
@@ -43,17 +41,6 @@ class FundingAdmin(admin.ModelAdmin):
             "Spaces",
             {"fields": ("music_type", "music_stock", "music_share")},
         ),
-        # (
-        #    "More About the Space",
-        #    {
-        #        "classes": ("collapse",),
-        #        "fields": ("amenities", "facilities", "house_rules"),
-        #    },
-        # ),
-        # (
-        #    "Last Details",
-        #    {"fields": ("host",)},
-        # ),
     )
 
     list_display = (
@@ -70,28 +57,11 @@ class FundingAdmin(admin.ModelAdmin):
         "count_photos",
     )
 
-    # list_filter = (
-    #    "instant_book",
-    #    "host__superhost",
-    #    "music_type",
-    #    "amenities",
-    #    "facilities",
-    #    "house_rules",
-    #    "city",
-    #    "country",
-    # )
-
     raw_id_fields = ("lyricist",)
 
-    search_fields = (
-        # "=city",
-        "^host__username",
-    )
+    search_fields = ("^host__username",)
 
     filter_horizontal = ("music_type",)
-
-    # def count_amenities(self, obj):
-    #    return obj.amenities.count()
 
     def count_photos(self, obj):
         return obj.photos.count()

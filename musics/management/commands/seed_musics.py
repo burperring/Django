@@ -24,7 +24,7 @@ class Command(BaseCommand):
             number,
             {
                 "name": lambda x: seeder.faker.name(),
-                "songwriter": lambda x: random.choice(all_users),
+                "lyricist": lambda x: random.choice(all_users),
                 "price": lambda x: random.randint(100, 2000),
             },
         )
