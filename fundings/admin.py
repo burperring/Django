@@ -3,7 +3,9 @@ from django.utils.html import mark_safe
 from . import models
 
 
-@admin.register(models.MusicType, models.Facility, models.Amenity, models.HouseRule)
+@admin.register(
+    models.MusicType,  # models.Facility, models.Amenity, models.HouseRule
+)
 class ItemAdmin(admin.ModelAdmin):
 
     """Item Admin Definition"""
@@ -31,71 +33,65 @@ class FundingAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             "Basic Info",
-            {"fields": ("name", "description", "country", "city", "address", "price")},
+            {"fields": ("name", "lyricist", "description", "price")},
         ),
         (
             "Times",
-            {"fields": ("check_in", "check_out", "instant_book")},
+            {"fields": ("funding_start", "funding_end")},
         ),
         (
             "Spaces",
-            {"fields": ("music_type", "guests", "beds", "bedrooms", "baths")},
+            {"fields": ("music_type", "music_stock", "music_share")},
         ),
-        (
-            "More About the Space",
-            {
-                "classes": ("collapse",),
-                "fields": ("amenities", "facilities", "house_rules"),
-            },
-        ),
-        (
-            "Last Details",
-            {"fields": ("host",)},
-        ),
+        # (
+        #    "More About the Space",
+        #    {
+        #        "classes": ("collapse",),
+        #        "fields": ("amenities", "facilities", "house_rules"),
+        #    },
+        # ),
+        # (
+        #    "Last Details",
+        #    {"fields": ("host",)},
+        # ),
     )
 
     list_display = (
         "name",
-        "country",
-        "city",
+        "lyricist",
         "price",
-        "guests",
-        "beds",
-        "bedrooms",
-        "baths",
-        "check_in",
-        "check_out",
-        "instant_book",
-        "count_amenities",
+        "music_stock",
+        "music_share",
+        "share_price",
+        "funding_start",
+        "funding_end",
+        "in_progress",
+        "is_finished",
         "count_photos",
     )
 
-    list_filter = (
-        "instant_book",
-        "host__superhost",
-        "music_type",
-        "amenities",
-        "facilities",
-        "house_rules",
-        "city",
-        "country",
-    )
+    # list_filter = (
+    #    "instant_book",
+    #    "host__superhost",
+    #    "music_type",
+    #    "amenities",
+    #    "facilities",
+    #    "house_rules",
+    #    "city",
+    #    "country",
+    # )
 
-    raw_id_fields = ("host",)
+    raw_id_fields = ("lyricist",)
 
     search_fields = (
-        "=city",
+        # "=city",
         "^host__username",
     )
 
-    filter_horizontal = (
-        "amenities",
-        "facilities",
-        "house_rules",
-    )
+    filter_horizontal = ("music_type",)
 
-    def count_amenities(self, obj):
-        return obj.amenities.count()
+    # def count_amenities(self, obj):
+    #    return obj.amenities.count()
 
     def count_photos(self, obj):
         return obj.photos.count()
