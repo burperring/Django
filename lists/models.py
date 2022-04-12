@@ -10,14 +10,12 @@ class List(core_models.TimeStampedModel):
     user = models.ForeignKey(
         "users.User", related_name="lists", on_delete=models.CASCADE
     )
-    fundings = models.ManyToManyField(
-        "fundings.Funding", related_name="lists", blank=True
-    )
+    musics = models.ManyToManyField("musics.Music", related_name="lists", blank=True)
 
     def __str__(self):
         return self.name
 
     def count_music(self):
-        return self.fundings.count()
+        return self.musics.count()
 
     count_music.short_description = "Number of Musics"
