@@ -1,13 +1,14 @@
 {% extends "base.html" %}
 
-{% block page_name %}
-    Home
-{% endblock page_name %}
+{% block page_title %}
+    {{funding.name}}
+{% endblock page_title %}
 
 {% block content %}
 <div>
     <h1> {{funding.name}} </h1>
     <h3> {{funding.description}} </h3>
+    {{funding.country}}
 </div>
 <div>
     <h2> 

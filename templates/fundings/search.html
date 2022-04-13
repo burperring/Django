@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+    Search
+{% endblock page_title %}
+
+{% block search-bar %}
+{% endblock search-bar %}
+
+{% block content %}
+
+    <h2>Search!</h2>
+
+    <form method="get" action="{% url "fundings:search" %}">
+        <div>
+        <label for="music">Music</label>
+        <input value="{{music}}" id="music" name="music" placeholder="Search by Music"/>
+        </div>
+
+        <div>
+            <label for="country">Country</label>
+            <select id="country" name="country">
+                {% for country in countries %}
+                    <option value="{{country.code}}" {% if country.code == s_country %}selected{% endif %}>{{country.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button>Search</button>
+    </form>
+
+{% endblock content %}

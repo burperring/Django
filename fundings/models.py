@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
+from django_countries.fields import CountryField
 from core import models as core_models
 
 
@@ -45,6 +46,7 @@ class Funding(core_models.TimeStampedModel):
 
     name = models.CharField(max_length=140)
     description = models.TextField()
+    country = CountryField()
     price = models.IntegerField()
     funding_start = models.DateField()
     funding_end = models.DateField()
@@ -59,6 +61,10 @@ class Funding(core_models.TimeStampedModel):
 
     def __str__(self):
         return self.name
+
+    # def save(self, *args, **kwargs):
+    #    self.city = str.capitalize(self.city)
+    #    super().save(*args, **kwargs)
 
     def in_progress(self):
         now = timezone.now().date()

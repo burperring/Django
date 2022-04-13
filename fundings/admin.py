@@ -31,7 +31,7 @@ class FundingAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             "Basic Info",
-            {"fields": ("name", "lyricist", "description", "price")},
+            {"fields": ("name", "lyricist", "country", "description", "price")},
         ),
         (
             "Times",
@@ -46,6 +46,7 @@ class FundingAdmin(admin.ModelAdmin):
     list_display = (
         "name",
         "lyricist",
+        "country",
         "price",
         "music_stock",
         "music_share",

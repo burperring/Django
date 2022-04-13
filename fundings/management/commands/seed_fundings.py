@@ -32,16 +32,10 @@ class Command(BaseCommand):
                 "funding_start": lambda x: datetime.now(),
                 "funding_end": lambda x: datetime.now()
                 + timedelta(days=random.randint(3, 25)),
-                # "beds": lambda x: random.randint(1, 5),
-                # "bedrooms": lambda x: random.randint(1, 5),
-                # "baths": lambda x: random.randint(1, 5),
             },
         )
         created_photos = seeder.execute()
         created_clean = flatten(list(created_photos.values()))
-        # amenities = funding_models.Amenity.objects.all()
-        # facilities = funding_models.Facility.objects.all()
-        # rules = funding_models.HouseRule.objects.all()
         for pk in created_clean:
             funding = funding_models.Funding.objects.get(pk=pk)
             for i in range(3, random.randint(10, 17)):

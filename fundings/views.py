@@ -1,4 +1,6 @@
 from django.views.generic import ListView, DetailView
+from django.shortcuts import render
+from django_countries import countries
 from . import models
 
 
@@ -18,3 +20,20 @@ class FundingDetail(DetailView):
     """FundingDetail Definition"""
 
     model = models.Funding
+
+
+def search(request):
+    music = request.GET.get("music", "Anywhere")
+    # music = str.capitalize(music)
+    country = request.GET.get("country", "KR")
+
+    form = {
+        "music": music,
+        "s_country": country,
+    }
+
+    choices = {
+        "countries": countries,
+    }
+
+    return render(request, "fundings/search.html", {**form, **choices})
