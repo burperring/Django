@@ -23,17 +23,33 @@ class FundingDetail(DetailView):
 
 
 def search(request):
-    music = request.GET.get("music", "Anywhere")
+    name = request.GET.get("name", "Anything")
     # music = str.capitalize(music)
     country = request.GET.get("country", "KR")
+    s_music_types = request.GET.getlist("music_types")
 
     form = {
-        "music": music,
+        "name": name,
         "s_country": country,
+        "s_music_types": s_music_types,
     }
+
+    music_types = models.MusicType.objects.all()
 
     choices = {
         "countries": countries,
+        "music_types": music_types,
     }
 
-    return render(request, "fundings/search.html", {**form, **choices})
+    filter_args = {}
+
+    if name != "Anything":
+        filter_args["name__startswith"] = name
+
+    filter_args["country"] = country
+
+    fundings = models.Funding.objects.filter(**filter_args)
+
+    return render(
+        request, "fundings/search.html", {**form, **choices, "fundings": fundings}
+    )
