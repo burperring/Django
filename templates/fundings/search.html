@@ -12,39 +12,7 @@
     <h2>Search!</h2>
 
     <form method="get" action="{% url "fundings:search" %}">
-        <div>
-        <label for="name">Music</label>
-        <input value="{{name}}" id="name" name="name" placeholder="Search by Music"/>
-        </div>
-
-        <div>
-            <label for="country">Country</label>
-            <select id="country" name="country">
-                {% for country in countries %}
-                    <option value="{{country.code}}" {% if country.code == s_country %}selected{% endif %}>{{country.name}}</option>
-                {% endfor %}
-            </select>
-        </div>
-
-        <div>
-            <h3>MusicTypes</h3>
-            <ul>
-                {% for music_type in music_types %}
-                    <li>
-                        <label for="m_{{music_type.pk}}">{{music_type.name}}</label>
-                        <input 
-                            id="m_{{music_type.pk}}" 
-                            name="music_types" 
-                            type="checkbox" 
-                            value={{music_type.pk}} 
-                            {% if music_type.pk|slugify in s_music_types %}
-                                checked
-                            {% endif %} />
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-
+        {{form.as_p}}
         <button>Search</button>
     </form>
 

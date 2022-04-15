@@ -1,7 +1,7 @@
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, View
 from django.shortcuts import render
-from django_countries import countries
-from . import models
+from django.core.paginator import Paginator
+from . import models, forms
 
 
 class HomeView(ListView):
@@ -22,34 +22,49 @@ class FundingDetail(DetailView):
     model = models.Funding
 
 
-def search(request):
-    name = request.GET.get("name", "Anything")
-    # music = str.capitalize(music)
-    country = request.GET.get("country", "KR")
-    s_music_types = request.GET.getlist("music_types")
+class SearchView(View):
 
-    form = {
-        "name": name,
-        "s_country": country,
-        "s_music_types": s_music_types,
-    }
+    """SearchView Definition"""
 
-    music_types = models.MusicType.objects.all()
+    def get(self, request):
 
-    choices = {
-        "countries": countries,
-        "music_types": music_types,
-    }
+        country = request.GET.get("country")
 
-    filter_args = {}
+        if country:
+            form = forms.SearchForm(request.GET)
 
-    if name != "Anything":
-        filter_args["name__startswith"] = name
+            if form.is_valid():
+                name = form.cleaned_data.get("name")
+                country = form.cleaned_data.get("country")
+                music_type = form.cleaned_data.get("music_type")
 
-    filter_args["country"] = country
+                filter_args = {}
 
-    fundings = models.Funding.objects.filter(**filter_args)
+                if name != "Anything":
+                    filter_args["name__startswith"] = name
 
-    return render(
-        request, "fundings/search.html", {**form, **choices, "fundings": fundings}
-    )
+                filter_args["country"] = country
+
+                fundings = models.Funding.objects.filter(**filter_args)
+
+                for mt in music_type:
+                    fundings = fundings.filter(music_type=mt)
+
+                qs = fundings.order_by("-created")
+
+                paginator = Paginator(qs, 10, orphans=5)
+
+                page = request.GET.get("page", 1)
+
+                fundings = paginator.get_page(page)
+
+                return render(
+                    request,
+                    "fundings/search.html",
+                    {"form": form, "fundings": fundings},
+                )
+
+        else:
+            form = forms.SearchForm()
+
+        return render(request, "fundings/search.html", {"form": form})
