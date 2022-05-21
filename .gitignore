@@ -146,3 +146,4 @@ cython_debug/
 
 # Add
 uploads/
+node_modules/

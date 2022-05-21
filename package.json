@@ -1,0 +1,25 @@
+{
+  "name": "django",
+  "version": "1.0.0",
+  "description": "Using Python, Django, Tailwind and more...",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/burperring/Django.git"
+  },
+  "scripts": {
+    "css": "gulp"
+  },
+  "homepage": "https://github.com/burperring/Django#readme",
+  "devDependencies": {
+    "autoprefixer": "^10.4.7",
+    "gulp": "^4.0.2",
+    "gulp-csso": "^4.0.1",
+    "gulp-postcss": "^9.0.1",
+    "gulp-sass": "^5.1.0",
+    "node-sass": "^7.0.1",
+    "tailwindcss": "^3.0.24"
+  },
+  "dependencies": {
+    "sass": "^1.52.1"
+  }
+}
