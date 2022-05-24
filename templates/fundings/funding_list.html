@@ -6,30 +6,30 @@
 
 {% block content %}
 
-    <div class="container w-11/12 rounded-xl mx-auto bg-gray-800 h-50vh mt-32 mb-10 bg-cover bg-center" style="background-image:url(https://images.unsplash.com/photo-1421217336522-861978fdf33a?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=60&raw_url=true&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjR8fG11c2ljfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&)">
+    <div class="container mx-auto">
+        
+        <div class="rounded-xl -mx-40 bg-gray-800 h-50vh mt-32 mb-10 bg-cover bg-center" style="background-image:url(https://images.unsplash.com/photo-1421217336522-861978fdf33a?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=60&raw_url=true&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjR8fG11c2ljfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&)"></div>
+
+        <div class="flex flex-wrap -mx-40">
+            {% for funding in fundings %}
+                {% include 'partials/funding_card.html' with funding=funding %}
+            {% endfor %}
+        </div>
+
+        <h5>
+            {% if page_obj.has_previous %}
+                <a href="?page={{page_obj.previous_page_number}}"> Previous </a>
+            {% endif %}
+            
+            Page{{page_obj.number}} of {{page_obj.paginator.num_pages}}
+
+            {% if page_obj.has_next %}
+                <a href="?page={{page_obj.next_page_number}}"> Next </a>
+            {% endif %}
+            
+        </h5>
 
     </div>
-
-    {% for funding in fundings %}
-        <h3>
-            <a href="{% url "fundings:detail" funding.pk %}">
-                {{funding.name}} / ${{funding.price}}
-            </a>
-        </h3>
-    {% endfor %}
-
-    <h5>
-        {% if page_obj.has_previous %}
-            <a href="?page={{page_obj.previous_page_number}}"> Previous </a>
-        {% endif %}
-        
-        Page{{page_obj.number}} of {{page_obj.paginator.num_pages}}
-
-        {% if page_obj.has_next %}
-            <a href="?page={{page_obj.next_page_number}}"> Next </a>
-        {% endif %}
-        
-    </h5>
 
 {% endblock content %}
 
