@@ -1,6 +1,6 @@
-<div class="w-1/4 mb-10 px-2">
+<div class="w-1/4 mb-10 px-2 overflow-hidden">
     <div class="w-full h-64 bg-cover bg-center rounded-md mb-3" style="background-image: url({{funding.first_photo}});"></div>
-    <div class="flex justify-between">
+    <div class="flex justify-between mb-2">
         <div class="border border-black text-black rounded py-px px-1">
             <span class="uppercase font-medium">left funding</span>
             <span class="text-gray-600 font-light">{{funding.music_stock}} /   {{funding.music_share}}</span>
@@ -9,4 +9,5 @@
             <i class="fa-solid fa-dollar-sign text-green-600 mx-1"></i>{{funding.share_price}}
         </div>
     </div>
+    <span class="text-balck w-11/12 block truncate">{{funding.name}}</span>
 </div>
