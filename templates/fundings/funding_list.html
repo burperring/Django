@@ -12,7 +12,7 @@
 
         <div class="flex flex-wrap -mx-40 mb-5">
             {% for funding in fundings %}
-                {% include 'partials/funding_card.html' with funding=funding %}
+                {% include 'mixins/funding_card.html' with funding=funding %}
             {% endfor %}
         </div>
 
