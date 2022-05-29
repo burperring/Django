@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from django.shortcuts import redirect, reverse
 from django.contrib.auth import authenticate, login, logout
 from django.core.files.base import ContentFile
+from django.contrib import messages
 from . import forms, models
 
 
@@ -24,6 +25,7 @@ class LoginView(FormView):
 
 
 def log_out(request):
+    messages.info(request, "Log out")
     logout(request)
     return redirect(reverse("core:home"))
 
@@ -80,7 +82,7 @@ def kakao_callback(request):
         token_json = token_request.json()
         error = token_json.get("error", None)
         if error is not None:
-            raise KakaoException()
+            raise KakaoException("Can't get authorization code.")
         access_token = token_json.get("access_token")
         profile_request = requests.get(
             "https://kapi.kakao.com/v2/user/me",
@@ -89,7 +91,7 @@ def kakao_callback(request):
         profile_json = profile_request.json()
         email = profile_json.get("kakao_account").get("email")
         if email is None:
-            raise KakaoException()
+            raise KakaoException("Please also give me your email")
         properties = profile_json.get("properties")
         nickname = properties.get("nickname")
         profile_image = (
@@ -98,7 +100,7 @@ def kakao_callback(request):
         try:
             user = models.User.objects.get(email=email)
             if user.login_method != models.User.LOGIN_KAKAO:
-                raise KakaoException()
+                raise KakaoException("Your ID isn't KAKAO")
         except models.User.DoesNotExist:
             user = models.User.objects.create(
                 email=email,
@@ -114,7 +116,9 @@ def kakao_callback(request):
                 user.avatar.save(
                     f"{nickname}-avatar.jpg", ContentFile(photo_request.content)
                 )
+        messages.success(request, f"Welcome back {user.first_name}")
         login(request, user)
         return redirect(reverse("core:home"))
-    except KakaoException:
+    except KakaoException as e:
+        messages.error(request, e)
         return redirect(reverse("users:login"))
