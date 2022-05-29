@@ -12,7 +12,7 @@
 </div>
 <div>
     <h2> 
-        By: {{funding.lyricist.username}}
+        By: <a href="{{funding.lyricist.get_absolute_url}}">{{funding.lyricist.username}}</a>
         {% if funding.lyricist.superhost %}
             (superhost)
         {% endif %}
