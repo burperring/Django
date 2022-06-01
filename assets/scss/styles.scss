@@ -21,6 +21,10 @@
     @apply w-full text-center rounded-md mb-2 py-5 font-bold text-lg;
 }
 
+.btn-link {
+    @apply w-full text-center rounded-lg mb-2 py-3 font-bold text-lg text-white bg-red-400;
+}
+
 input {
     @apply text-left border border-gray-500 px-5 w-full rounded-md mb-2 py-5 font-bold text-lg;
 
