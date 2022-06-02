@@ -7,10 +7,11 @@ from django.shortcuts import redirect, reverse
 from django.contrib.auth import authenticate, login, logout
 from django.core.files.base import ContentFile
 from django.contrib import messages
-from . import forms, models
+from django.contrib.messages.views import SuccessMessageMixin
+from . import forms, models, mixins
 
 
-class LoginView(FormView):
+class LoginView(mixins.LoggedOutOnluView, FormView):
 
     template_name = "users/login.html"
     form_class = forms.LoginForm
@@ -32,7 +33,7 @@ def log_out(request):
     return redirect(reverse("core:home"))
 
 
-class SignUpView(FormView):
+class SignUpView(mixins.LoggedOutOnluView, FormView):
     template_name = "users/signup.html"
     form_class = forms.SignUpForm
     success_url = reverse_lazy("core:home")
@@ -132,7 +133,7 @@ class UserProfileView(DetailView):
     context_object_name = "user_obj"
 
 
-class UpdateProfileView(UpdateView):
+class UpdateProfileView(SuccessMessageMixin, UpdateView):
 
     model = models.User
     template_name = "users/update-profile.html"
@@ -145,6 +146,7 @@ class UpdateProfileView(UpdateView):
         "language",
         "currency",
     )
+    success_message = "Profile Updated"
 
     def get_object(self, queryset=None):
         return self.request.user
@@ -161,9 +163,10 @@ class UpdateProfileView(UpdateView):
         return form
 
 
-class UpdatePasswordView(PasswordChangeView):
+class UpdatePasswordView(SuccessMessageMixin, PasswordChangeView):
 
     template_name = "users/update-password.html"
+    success_message = "Password Updated"
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class=form_class)
