@@ -102,3 +102,7 @@ class Funding(core_models.TimeStampedModel):
     def first_photo(self):
         (photo,) = self.photos.all()[:1]
         return photo.file.url
+
+    def get_next_photo(self):
+        (photo,) = self.photos.all()[1:2]
+        return photo.file.url

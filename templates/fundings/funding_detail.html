@@ -5,25 +5,10 @@
 {% endblock page_title %}
 
 {% block content %}
-<div>
-    <h1> {{funding.name}} </h1>
-    <h3> {{funding.description}} </h3>
-    {{funding.country}}
-</div>
-<div>
-    <h2> 
-        By: <a href="{{funding.lyricist.get_absolute_url}}">{{funding.lyricist.username}}</a>
-        {% if funding.lyricist.superhost %}
-            (superhost)
-        {% endif %}
-    </h2>
-    <h3> Music Type </h3>
-    <ul>
-        {% for a in funding.music_type.all %}
-            <li> {{a}} </li>
-        {% endfor %}
-    </ul>
-    <h3> Funding Date </h3>
-    <ul> {{funding.funding_start}} ~ {{funding.funding_end}} </ul>
-</div>
+    
+    <div class="-mt-4 container max-w-full h-75vh flex mb-20">
+        <div class="h-full w-1/2 bg-cover bg-center border border-gray-700" style="background-image:url({{funding.first_photo}})"></div>
+        <div class="w-1/2 h-auto bg-cover bg-center border border-gray-700" style="background-image:url({{funding.get_next_photo}})"></div>
+    </div>
+
 {% endblock content %}
