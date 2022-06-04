@@ -11,4 +11,26 @@
         <div class="w-1/2 h-auto bg-cover bg-center border border-gray-700" style="background-image:url({{funding.get_next_photo}})"></div>
     </div>
 
+    <div class="container mx-auto flex justify-around pb-56">
+        <div class="w-1/2">
+            <div class="flex justify-between">
+                <div>
+                    <h4 class="text-3xl font-medium mb-px">{{funding.name}}</h4>
+                    <span class="text-gray-700 font-light">{{funding.country.name}}</span>
+                </div>
+                <a href="{{funding.lyricist.get_absolute_url}}" class="flex flex-col items-center">
+                    {% include "mixins/user_avatar.html" with user=funding.lyricist %}
+                    <span class="mt-2 text-gray-500">{{funding.lyricist.first_name}}</span>
+                </a>
+            </div>
+            <div class="flex">
+                {{funding.music_type}}
+                {{funding.music_stock}} / {{funding.music_share}}
+            </div>
+        </div>
+        <div class="w-1/3">
+
+        </div>
+    </div>
+
 {% endblock content %}
