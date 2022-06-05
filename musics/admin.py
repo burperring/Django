@@ -11,7 +11,7 @@ class ItemAdmin(admin.ModelAdmin):
     list_display = ("name", "used_by")
 
     def used_by(self, obj):
-        return obj.fundings.count()
+        return obj.musics.count()
 
     pass
 

@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from core import models as core_models
 
 
@@ -70,3 +71,14 @@ class Music(core_models.TimeStampedModel):
                 all_ratings += review.rating_average()
             return round(all_ratings / len(all_reviews), 2)
         return 0
+
+    def first_photo(self):
+        (photo,) = self.photos.all()[:1]
+        return photo.file.url
+
+    def get_next_photo(self):
+        (photo,) = self.photos.all()[1:2]
+        return photo.file.url
+
+    def get_absolute_url(self):
+        return reverse("musics:mdetail", kwargs={"pk": self.pk})
