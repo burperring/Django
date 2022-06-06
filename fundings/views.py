@@ -1,4 +1,4 @@
-from django.views.generic import ListView, DetailView, View
+from django.views.generic import ListView, DetailView, View, UpdateView
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from . import models, forms
@@ -68,3 +68,20 @@ class SearchView(View):
             form = forms.SearchForm()
 
         return render(request, "fundings/search.html", {"form": form})
+
+
+class EditFundingView(UpdateView):
+
+    model = models.Funding
+    template_name = "fundings/funding_edit.html"
+    fields = (
+        "name",
+        "description",
+        "country",
+        "price",
+        "funding_start",
+        "funding_end",
+        "music_stock",
+        "music_share",
+        "music_type",
+    )

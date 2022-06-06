@@ -3,10 +3,10 @@
     <div class="w-full h-64 bg-cover bg-center rounded-md mb-3" style="background-image: url({{music.first_photo}});"></div>
     <div class="flex justify-between mb-2">
         <div class="border border-black text-black rounded py-px px-1">
-            <span> TEST </span>
+            <span> {{music.lyricist.first_name}} </span>
         </div>
         <div>
-            <i class="fas fa-star text-yellow-300 mx-1"></i>{{musics.total_rating}}
+            <i class="fas fa-star text-yellow-300 mx-1"></i>{{music.total_rating}}
         </div>
     </div>
     <span class="text-balck w-11/12 block truncate">{{music.name}}</span>
