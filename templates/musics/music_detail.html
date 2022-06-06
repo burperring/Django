@@ -16,7 +16,7 @@
             <div class="flex justify-between">
                 <div class="mr-8 mb-5">
                     <h4 class="text-3xl font-medium mb-px">{{music.name}}</h4>
-                    <span class="text-gray-700 font-light">{{music.lyricist.first_name}}</span>
+                    <span class="text-gray-700 font-light">{{music.lyricist}}</span>
                 </div>
                 <a href="{{music.lyricist.get_absolute_url}}" class="flex flex-col items-center">
                     {% include "mixins/user_avatar.html" with user=music.lyricist %}

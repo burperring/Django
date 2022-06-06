@@ -1,6 +1,10 @@
+from django.http import Http404
 from django.views.generic import ListView, DetailView, View, UpdateView
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from users import mixins as user_mixins
 from . import models, forms
 
 
@@ -70,7 +74,7 @@ class SearchView(View):
         return render(request, "fundings/search.html", {"form": form})
 
 
-class EditFundingView(UpdateView):
+class EditFundingView(user_mixins.LoggedInOnlyView, UpdateView):
 
     model = models.Funding
     template_name = "fundings/funding_edit.html"
@@ -85,3 +89,36 @@ class EditFundingView(UpdateView):
         "music_share",
         "music_type",
     )
+
+    def get_object(self, queryset=None):
+        funding = super().get_object(queryset=queryset)
+        if funding.lyricist.pk != self.request.user.pk:
+            raise Http404()
+        return funding
+
+
+class FundingPhotosView(user_mixins.LoggedInOnlyView, DetailView):
+
+    model = models.Funding
+    template_name = "fundings/funding_photos.html"
+
+    def get_object(self, queryset=None):
+        funding = super().get_object(queryset=queryset)
+        if funding.lyricist.pk != self.request.user.pk:
+            raise Http404()
+        return funding
+
+
+@login_required
+def delete_photo(request, funding_pk, photo_pk):
+    user = request.user
+    try:
+        funding = models.Funding.objects.get(pk=funding_pk)
+        if funding.lyricist.pk != user.pk:
+            messages.error(request, "Can't delete that photo")
+        else:
+            models.Photo.objects.filter(pk=photo_pk).delete()
+            messages.success(request, "Photo Delete")
+        return redirect(reverse("fundings:photos", kwargs={"pk": funding_pk}))
+    except models.Funding.DoesNotExist:
+        return redirect(reverse("core:home"))

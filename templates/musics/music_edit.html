@@ -13,6 +13,10 @@
 
         {% include 'mixins/music/music_form.html' with form=form cta="Update Music" %}
 
+        <div class="mt-3">
+            <a href="{% url 'musics:photos' music.pk %}" class="text-red-400 font-bold">Edit photos</a>
+        </div>
+
     </div>
 
 {% endblock content %}
