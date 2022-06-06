@@ -4,6 +4,7 @@ from django.shortcuts import redirect, reverse
 from users import mixins as user_mixins
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from . import models
 
 # Create your views here.
@@ -58,3 +59,16 @@ def delete_photo(request, music_pk, photo_pk):
         return redirect(reverse("musics:photos", kwargs={"pk": music_pk}))
     except models.Music.DoesNotExist:
         return redirect(reverse("core:home"))
+
+
+class EditPhotoView(user_mixins.LoggedInOnlyView, SuccessMessageMixin, UpdateView):
+
+    model = models.Photo
+    template_name = "musics/music_photo_edit.html"
+    pk_url_kwarg = "photo_pk"
+    success_message = "Photo Updated"
+    fields = ("caption",)
+
+    def get_success_url(self):
+        music_pk = self.kwargs.get("music_pk")
+        return reverse("musics:photos", kwargs={"pk": music_pk})

@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect, reverse
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from users import mixins as user_mixins
 from . import models, forms
 
@@ -122,3 +123,16 @@ def delete_photo(request, funding_pk, photo_pk):
         return redirect(reverse("fundings:photos", kwargs={"pk": funding_pk}))
     except models.Funding.DoesNotExist:
         return redirect(reverse("core:home"))
+
+
+class EditPhotoView(user_mixins.LoggedInOnlyView, SuccessMessageMixin, UpdateView):
+
+    model = models.Photo
+    template_name = "fundings/funding_photo_edit.html"
+    pk_url_kwarg = "photo_pk"
+    success_message = "Photo Updated"
+    fields = ("caption",)
+
+    def get_success_url(self):
+        funding_pk = self.kwargs.get("funding_pk")
+        return reverse("fundings:photos", kwargs={"pk": funding_pk})
