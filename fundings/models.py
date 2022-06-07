@@ -115,6 +115,6 @@ class Funding(core_models.TimeStampedModel):
             return None
 
     def get_calendars(self):
-        calendar = Calendar(2022, 6)
-        print(calendar.get_month())
-        return False
+        this_month = Calendar(2022, 6)
+        next_month = Calendar(2022, 7)
+        return (this_month, next_month)

@@ -39,7 +39,14 @@
             {% if funding.lyricist == user %}
                 <a href="{% url 'fundings:edit' funding.pk %}" class="btn-link block">Edit Funding</a>
             {% else %}
-                {{funding.get_calendars}}
+                {% for calendar in funding.get_calendars %}
+                    <div>
+                        {{calendar.get_month}}/{{calendar.year}}
+                        {% for day in calendar.day_names %}
+                            {{day}}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
             {% endif %}
         </div>
     </div>
