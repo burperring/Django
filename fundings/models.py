@@ -100,8 +100,11 @@ class Funding(core_models.TimeStampedModel):
         return reverse("fundings:detail", kwargs={"pk": self.pk})
 
     def first_photo(self):
-        (photo,) = self.photos.all()[:1]
-        return photo.file.url
+        try:
+            (photo,) = self.photos.all()[:1]
+            return photo.file.url
+        except ValueError:
+            return None
 
     def get_next_photo(self):
         (photo,) = self.photos.all()[1:2]

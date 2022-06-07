@@ -40,3 +40,7 @@ class CreateFundingForm(forms.ModelForm):
             "music_share",
             "music_type",
         )
+
+    def save(self, *args, **kwargs):
+        funding = super().save(commit=False)
+        return funding

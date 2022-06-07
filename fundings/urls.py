@@ -5,6 +5,7 @@ from . import views
 app_name = "fundings"
 
 urlpatterns = [
+    path("create/", views.CreateFundingView.as_view(), name="create"),
     path("<int:pk>/", views.FundingDetail.as_view(), name="detail"),
     path("<int:pk>/edit/", views.EditFundingView.as_view(), name="edit"),
     path("<int:pk>/photos/", views.FundingPhotosView.as_view(), name="photos"),

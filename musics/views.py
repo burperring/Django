@@ -87,4 +87,14 @@ class AddPhotoView(user_mixins.LoggedInOnlyView, SuccessMessageMixin, FormView):
         return redirect(reverse("musics:photos", kwargs={"pk": pk}))
 
 
-class UploadFundingView(user_mixins.LoggedInOnlyView, FormView):
+class CreateMusicView(user_mixins.LoggedInOnlyView, FormView):
+
+    form_class = forms.CreateMusicForm
+    template_name = "musics/music_create.html"
+
+    def form_valid(self, form):
+        music = form.save()
+        music.lyricist = self.request.user
+        music.save()
+        messages.success(self.request, "Photo Uploaded")
+        return redirect(reverse("musics:mdetail", kwargs={"pk": music.pk}))

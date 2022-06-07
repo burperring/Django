@@ -151,7 +151,14 @@ class AddPhotoView(user_mixins.LoggedInOnlyView, SuccessMessageMixin, FormView):
         return redirect(reverse("fundings:photos", kwargs={"pk": pk}))
 
 
-class UploadFundingView(user_mixins.LoggedInOnlyView, FormView):
+class CreateFundingView(user_mixins.LoggedInOnlyView, FormView):
 
     form_class = forms.CreateFundingForm
-    template_name
+    template_name = "fundings/funding_create.html"
+
+    def form_valid(self, form):
+        funding = form.save()
+        funding.lyricist = self.request.user
+        funding.save()
+        messages.success(self.request, "Photo Uploaded")
+        return redirect(reverse("fundings:detail", kwargs={"pk": funding.pk}))
