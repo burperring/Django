@@ -1,11 +1,11 @@
 from django.http import Http404
-from django.views.generic import DetailView, UpdateView
+from django.views.generic import DetailView, UpdateView, FormView
 from django.shortcuts import redirect, reverse
 from users import mixins as user_mixins
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from . import models
+from . import models, forms
 
 # Create your views here.
 
@@ -72,3 +72,19 @@ class EditPhotoView(user_mixins.LoggedInOnlyView, SuccessMessageMixin, UpdateVie
     def get_success_url(self):
         music_pk = self.kwargs.get("music_pk")
         return reverse("musics:photos", kwargs={"pk": music_pk})
+
+
+class AddPhotoView(user_mixins.LoggedInOnlyView, SuccessMessageMixin, FormView):
+
+    model = models.Photo
+    template_name = "musics/music_photo_create.html"
+    form_class = forms.CreatePhotoForm
+
+    def form_valid(self, form):
+        pk = self.kwargs.get("pk")
+        form.save(pk)
+        messages.success(self.request, "Photo Uploaded")
+        return redirect(reverse("musics:photos", kwargs={"pk": pk}))
+
+
+class UploadFundingView(user_mixins.LoggedInOnlyView, FormView):
