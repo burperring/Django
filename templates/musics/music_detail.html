@@ -33,7 +33,13 @@
             <p class="border-section">
                 {{music.description}}
             </p>
-            <div class="mt-8">
+            
+        </div>
+        <div class="w-1/3">
+            {% if music.lyricist == user %}
+                <a href="{% url 'musics:edit' music.pk %}" class="btn-link block mb-8">Edit Music</a>
+            {% endif %}
+            <div>
                 <h4 class="font-medium text-2xl mb-5">Reviews</h4>
                 <div class="flex items-center">
                     <div>
@@ -63,11 +69,6 @@
                     {% endfor %}
                 </div>
             </div>
-        </div>
-        <div class="w-1/3">
-            {% if music.lyricist == user %}
-                <a href="{% url 'musics:edit' music.pk %}" class="btn-link block">Edit Music</a>
-            {% endif %}
         </div>
     </div>
 

@@ -160,5 +160,6 @@ class CreateFundingView(user_mixins.LoggedInOnlyView, FormView):
         funding = form.save()
         funding.lyricist = self.request.user
         funding.save()
-        messages.success(self.request, "Photo Uploaded")
+        form.save_m2m()
+        messages.success(self.request, "Funding Uploaded")
         return redirect(reverse("fundings:detail", kwargs={"pk": funding.pk}))

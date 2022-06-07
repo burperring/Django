@@ -57,7 +57,7 @@ class Music(core_models.TimeStampedModel):
         "users.User", related_name="musics", on_delete=models.CASCADE
     )
     description = models.TextField()
-    price = models.IntegerField()
+    price = models.IntegerField(default=0)
     music_type = models.ManyToManyField("MusicType", related_name="musics", blank=True)
 
     def __str__(self):
@@ -80,8 +80,11 @@ class Music(core_models.TimeStampedModel):
             return None
 
     def get_next_photo(self):
-        (photo,) = self.photos.all()[1:2]
-        return photo.file.url
+        try:
+            (photo,) = self.photos.all()[1:2]
+            return photo.file.url
+        except ValueError:
+            return None
 
     def get_absolute_url(self):
         return reverse("musics:mdetail", kwargs={"pk": self.pk})

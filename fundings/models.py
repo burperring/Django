@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django_countries.fields import CountryField
 from core import models as core_models
+from cal import Calendar
 
 
 class AbstractItem(core_models.TimeStampedModel):
@@ -107,5 +108,13 @@ class Funding(core_models.TimeStampedModel):
             return None
 
     def get_next_photo(self):
-        (photo,) = self.photos.all()[1:2]
-        return photo.file.url
+        try:
+            (photo,) = self.photos.all()[1:2]
+            return photo.file.url
+        except ValueError:
+            return None
+
+    def get_calendars(self):
+        calendar = Calendar(2022, 6)
+        print(calendar.get_month())
+        return False
