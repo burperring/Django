@@ -1,0 +1,15 @@
+<form method="POST" class="w-full" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+            <span class="text-red-600 font-bold text-sm">{{error}}</span>
+        {% endfor %}
+    {% endif %}
+
+    {% for field in form %}
+        {% include 'mixins/review/review_input.html' with field=field %}
+    {% endfor %}
+
+    <button class="btn bg-red-400 text-white">{{cta}}</button>
+</form>

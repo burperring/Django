@@ -1,4 +1,6 @@
 from django.contrib import messages
+from django.shortcuts import render
+from django.template import RequestContext
 from django.views.generic import FormView
 from django.shortcuts import redirect, reverse
 from users import mixins as user_mixins
@@ -12,24 +14,27 @@ class CreateReviewView(user_mixins.LoggedInOnlyView, FormView):
     template_name = "musics/music_review.html"
 
     def form_valid(self, form):
-        music = music_models.Music.objects.get_or_none(pk=self.pk)
+        str_list = list(self.kwargs.values())
+        int_list = list(map(int, str_list))
+        music = music_models.Music.objects.get_or_none(pk=int_list[0])
         review = form.save()
         review.user = self.request.user
+        review.music = music
         review.save()
-        form.save_m2m()
         messages.success(self.request, "Review Uploaded")
-        return redirect(reverse("music:mdetail", kwargs={"music": music.pk}))
+        return redirect(reverse("musics:mdetail", kwargs={"pk": music.pk}))
 
 
-# class CreateReviewView(user_mixins.LoggedInOnlyView, FormView):
-
-#   form_class = forms.CreateReviewForm
-#   template_name = "musics/music_review.html"
-
-#    def form_valid(self, form):
-#        review = form.save()
-#        review.user = self.request.user
-#        review.save()
-#        form.save_m2m()
-#        messages.success(self.request, "Review Uploaded")
-#        return redirect(reverse("music:mdetail", kwargs={"music": review.music}))
+# def create_review(request, music):
+#    if request.method == "POST":
+#        form = forms.CreateReviewForm(request.POST)
+#        music = music_models.Music.objects.get_or_none(pk=music)
+#        if not music:
+#            return redirect(reverse("core:home"))
+#        if form.is_valid():
+#            review = form.save()
+#            review.music = music
+#            review.user = request.user
+#            review.save()
+#            messages.success(request, "Music Reviewed")
+#            return redirect(reverse("musics:mdetail", kwargs={"pk": music.pk}))

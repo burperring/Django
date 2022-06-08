@@ -23,6 +23,6 @@ class CreateMusicForm(forms.ModelForm):
             "music_type",
         )
 
-    def save(self, *args, **kwargs):
+    def save(self):
         music = super().save(commit=False)
         return music
