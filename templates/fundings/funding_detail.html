@@ -37,14 +37,56 @@
         </div>
         <div class="w-1/3">
             {% if funding.lyricist == user %}
-                <a href="{% url 'fundings:edit' funding.pk %}" class="btn-link block">Edit Funding</a>
+                <a href="{% url 'fundings:edit' funding.pk %}" class="btn-link block mb-5">Edit Funding</a>
+                {% for calendar in funding.get_calendars %}
+                    <div class="mb-20">
+                        <span class="text-center font-bold text-lg block mb-8">{{calendar.get_month}} / {{calendar.year}}</span>
+                        <div class="cal-grid mb-4 font-semibold">
+                            {% for day in calendar.day_names %}
+                                <span>{{day}}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="cal-grid">
+                            {% for day in calendar.get_days %}
+                                {% if day.number != 0 %}
+                                    {% if day.past %}
+                                        <span class="bg-red-500 w-full text-center rounded-lg text-white p-2">{{day}}</span>
+                                    {% elif day.npast %}
+                                        <span class="bg-green-500 w-full text-center rounded-lg text-white p-2">{{day}}</span>
+                                    {% else %}
+                                        <span class="bg-gray-100 w-full text-center rounded-lg text-gray-700 p-2">{{day}}</span>
+                                    {% endif %}
+                                {% else %}
+                                    <span></span>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
             {% else %}
                 {% for calendar in funding.get_calendars %}
-                    <div>
-                        {{calendar.get_month}}/{{calendar.year}}
-                        {% for day in calendar.day_names %}
-                            {{day}}
-                        {% endfor %}
+                    <div class="mb-20">
+                        <span class="text-center font-bold text-lg block mb-8">{{calendar.get_month}} / {{calendar.year}}</span>
+                        <div class="cal-grid mb-4 font-semibold">
+                            {% for day in calendar.day_names %}
+                                <span>{{day}}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="cal-grid">
+                            {% for day in calendar.get_days %}
+                                {% if day.number != 0 %}
+                                    {% if day.past %}
+                                        <span class="bg-red-500 w-full text-center rounded-lg text-white p-2">{{day}}</span>
+                                    {% elif day.npast %}
+                                        <span class="bg-green-500 w-full text-center rounded-lg text-white p-2">{{day}}</span>
+                                    {% else %}
+                                        <span class="bg-gray-100 w-full text-center rounded-lg text-gray-700 p-2">{{day}}</span>
+                                    {% endif %}
+                                {% else %}
+                                    <span></span>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
                     </div>
                 {% endfor %}
             {% endif %}

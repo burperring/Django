@@ -115,6 +115,17 @@ class Funding(core_models.TimeStampedModel):
             return None
 
     def get_calendars(self):
-        this_month = Calendar(2022, 6)
-        next_month = Calendar(2022, 7)
+        if self.funding_start.month == self.funding_end.month:
+            this_month = Calendar(
+                self.funding_start.year, self.funding_start.month, self.funding_end.day
+            )
+        else:
+            this_month = Calendar(
+                self.funding_start.year,
+                self.funding_start.month,
+                self.funding_start.day,
+            )
+        next_month = Calendar(
+            self.funding_end.year, self.funding_end.month, self.funding_end.day
+        )
         return (this_month, next_month)
