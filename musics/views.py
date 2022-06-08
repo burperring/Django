@@ -97,5 +97,5 @@ class CreateMusicView(user_mixins.LoggedInOnlyView, FormView):
         music.lyricist = self.request.user
         music.save()
         form.save_m2m()
-        messages.success(self.request, "music Uploaded")
+        messages.success(self.request, "Music Uploaded")
         return redirect(reverse("musics:mdetail", kwargs={"pk": music.pk}))

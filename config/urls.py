@@ -22,6 +22,7 @@ urlpatterns = [
     path("", include("core.urls", namespace="core")),
     path("fundings/", include("fundings.urls", namespace="fundings")),
     path("musics/", include("musics.urls", namespace="musics")),
+    path("reviews/", include("reviews.urls", namespace="reviews")),
     path("users/", include("users.urls", namespace="users")),
     path("admin/", admin.site.urls),
 ]
