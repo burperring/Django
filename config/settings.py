@@ -51,7 +51,7 @@ PROJECT_APPS = [
     "users.apps.UsersConfig",
     "fundings.apps.FundingsConfig",
     "reviews.apps.ReviewsConfig",
-    "reservations.apps.ReservationsConfig",
+    # "reservations.apps.ReservationsConfig",
     "lists.apps.ListsConfig",
     "conversations.apps.ConversationsConfig",
     "musics.apps.MusicsConfig",
