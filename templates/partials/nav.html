@@ -3,6 +3,7 @@
     {% if user.is_authenticated %}
         <li class="nav_link"><a href="{% url 'fundings:create' %}">Create Funding</a></li>
         <li class="nav_link"><a href="{% url 'musics:create' %}">Create Music</a></li>
+        <li class="nav_link"><a href="{% url 'lists:see-favs' %}">Favorite({{user.list.musics.count}})</a></li>
         <li class="nav_link"><a href="{{user.get_absolute_url}}">Profile</a></li>
         <li class="nav_link"><a href="{% url "users:logout" %}">Log out</a></li>
     {% else %}

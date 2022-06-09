@@ -159,3 +159,8 @@ EMAIL_FROM = "MF@sandbox70ed6c1cadc54515ba0a8318b3d2b095.mailgun.org"
 
 # Auth
 LOGIN_URL = "/users/login/"
+
+
+# Locale
+
+LOCALE_PATH = (os.path.join(BASE_DIR, "locale"),)

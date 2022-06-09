@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load on_favs %}
 
 {% block page_title %}
     {{music.name}}
@@ -23,6 +24,14 @@
                     <span class="mt-2 text-gray-500">{{music.lyricist.first_name}}</span>
                 </a>
             </div>
+            {% if music.lyricist != user %}
+                {% on_favs music as on_favs_boolean %}
+                {% if on_favs_boolean %}
+                    <a class="block mb-10 w-2/5 text-red-400 font-bold" href="{% url 'lists:toggle-music' music.pk %}?action=remove">Remove from Favorite Music</a>
+                {% else %}
+                    <a class="block mb-10 w-2/5 text-red-400 font-bold" href="{% url 'lists:toggle-music' music.pk %}?action=add">Save to Favorite Music</a>
+                {% endif %}
+            {% endif %}
             <div class="flex border-section">
                 <span class="mr-5 font-light">
                     {% for a in music.music_type.all %}
