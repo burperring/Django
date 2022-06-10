@@ -1,6 +1,4 @@
 from django.contrib import messages
-from django.shortcuts import render
-from django.template import RequestContext
 from django.views.generic import FormView
 from django.shortcuts import redirect, reverse
 from users import mixins as user_mixins

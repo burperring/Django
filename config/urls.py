@@ -25,6 +25,7 @@ urlpatterns = [
     path("musics/", include("musics.urls", namespace="musics")),
     path("reviews/", include("reviews.urls", namespace="reviews")),
     path("users/", include("users.urls", namespace="users")),
+    path("buys/", include("buys.urls", namespace="buys")),
     path("admin/", admin.site.urls),
 ]
 

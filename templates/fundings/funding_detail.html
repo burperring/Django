@@ -34,6 +34,9 @@
             <p class="border-section">
                 {{funding.description}}
             </p>
+            {% if funding.lyricist != user %}
+                <a href="{% url 'buys:get' funding.pk %}" class="btn-link block mb-8">Buy Funding</a>
+            {% endif %}
         </div>
         <div class="w-1/3">
             {% if funding.lyricist == user %}
