@@ -20,8 +20,8 @@
             </a>
             
             {% block search-bar %}
-            <form method="get" action="{% url "fundings:search" %}" class="w-9/12">
-                <input class="search-box border px-3 py-2 text-sm font-semibold placeholder-gray-500 w-full rounded-sm shadow-md hover:shadow-lg focus:outline-none" name="music" placeholder="Search by Music"/>
+            <form method="get" action="{% url 'fundings:search' %}" class="w-9/12">
+                <input class="search-box border px-3 py-2 text-sm font-semibold placeholder-gray-500 w-full rounded-sm shadow-md hover:shadow-lg focus:outline-none" name="music" placeholder="Search by Funding"/>
             </form>
             {% endblock search-bar %}
         </div>
