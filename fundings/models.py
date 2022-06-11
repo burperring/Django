@@ -100,6 +100,13 @@ class Funding(core_models.TimeStampedModel):
     def get_absolute_url(self):
         return reverse("fundings:detail", kwargs={"pk": self.pk})
 
+    def funding_music(self):
+        try:
+            (music,) = self.songs.all()
+            return music.sfile.url
+        except ValueError:
+            return None
+
     def first_photo(self):
         try:
             (photo,) = self.photos.all()[:1]
@@ -117,7 +124,9 @@ class Funding(core_models.TimeStampedModel):
     def get_calendars(self):
         if self.funding_start.month == self.funding_end.month:
             this_month = Calendar(
-                self.funding_start.year, self.funding_start.month, self.funding_end.day
+                self.funding_start.year,
+                self.funding_start.month,
+                self.funding_end.day,
             )
         else:
             this_month = Calendar(
