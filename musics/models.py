@@ -88,3 +88,10 @@ class Music(core_models.TimeStampedModel):
 
     def get_absolute_url(self):
         return reverse("musics:mdetail", kwargs={"pk": self.pk})
+
+    def music_music(self):
+        try:
+            (music,) = self.songs.all()
+            return music.sfile.url
+        except ValueError:
+            return None
