@@ -16,7 +16,7 @@ class HomeView(ListView):
 
     model = models.Funding
     paginate_by = 12
-    paginate_orphans = 5
+    paginate_orphans = 4
     ordering = "created"
     context_object_name = "fundings"
 
