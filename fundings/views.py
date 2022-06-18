@@ -58,7 +58,7 @@ class SearchView(View):
 
                 qs = fundings.order_by("-created")
 
-                paginator = Paginator(qs, 10, orphans=5)
+                paginator = Paginator(qs, 12, orphans=5)
 
                 page = request.GET.get("page", 1)
 

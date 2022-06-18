@@ -16,6 +16,8 @@
                     {% include 'mixins/funding_card.html' with funding=funding %}
                 {% elif funding.is_finished %}
                     {% include 'mixins/finish_funding_card.html' with funding=funding %}
+                {% else %}
+                    {% include 'mixins/wait_funding_card.html' with funding=funding %}
                 {% endif %}
             {% endfor %}
         </div>
